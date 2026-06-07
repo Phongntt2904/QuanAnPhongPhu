@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Quản lý sản phẩm - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<nav class="navbar navbar-dark bg-dark shadow mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold" th:href="@{/admin}">ADMIN DASHBOARD</a>
-        <a th:href="@{/}" class="btn btn-outline-light btn-sm">Xem Trang Chủ</a>
-    </div>
-</nav>
+<head th:replace="~{fragments :: html_head('Quản lý sản phẩm - Admin')}"></head>
+<style>
+    body { background-color: var(--bg-light); }
+    .admin-navbar { background-color: var(--secondary-color) !important; }
+    .admin-navbar .navbar-brand { color: white !important; }
+</style>
+<body>
 
-<div class="container bg-white p-4 shadow-sm rounded">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Danh sách món ăn</h3>
-        <a th:href="@{/admin/product/add}" class="btn btn-primary">+ Thêm món mới</a>
-    </div>
+<nav th:replace="~{fragments :: header}"></nav>
 
-    <table class="table table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Ảnh</th>
-                <th>Tên món</th>
-                <th>Giá</th>
-                <th>Danh mục</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="p : ${products}">
-                <td><img th:src="${p.imageUrl}" style="width: 50px; height: 50px; object-fit: cover;"></td>
-                <td th:text="${p.name}"></td>
-                <td th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
-                <td th:text="${p.category != null ? p.category.name : 'N/A'}"></td>
-                <td>
-                    <a th:href="@{/admin/product/delete/{id}(id=${p.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Xóa món này?')">Xóa</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="content-wrapper">
+    <div class="container py-5">
+        <div class="bg-white p-5 shadow-sm rounded-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold">Danh sách món ăn</h3>
+                <a th:href="@{/admin/product/add}" class="btn btn-danger rounded-pill px-4 hover-scale">+ Thêm món mới</a>
+            </div>
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Ảnh</th>
+                        <th>Tên món</th>
+                        <th>Giá</th>
+                        <th>Danh mục</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${products}">
+                        <td th:text="${p.id}"></td>
+                        <td><img th:src="${p.imageUrl}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"></td>
+                        <td th:text="${p.name}"></td>
+                        <td th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                        <td th:text="${p.category != null ? p.category.name : 'N/A'}"></td>
+                        <td>
+                            <a th:href="@{/admin/product/delete/{id}(id=${p.id})}" class="btn btn-sm btn-outline-danger hover-scale" onclick="return confirm('Bạn có chắc chắn muốn xóa món này?')">Xóa</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

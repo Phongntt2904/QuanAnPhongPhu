@@ -5,37 +5,39 @@
 
 <div th:replace="~{fragments :: header}"></div>
 
-<div class="container py-5">
-    <div class="max-width-600 mx-auto bg-white p-5 shadow-sm rounded-4" style="max-width: 600px;">
-        <div class="text-center mb-4">
-            <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
-                 style="width: 80px; height: 80px; font-size: 30px; font-weight: 800;"
-                 th:text="${user.fullName.substring(0,1).toUpperCase()}">U</div>
-            <h3 class="fw-bold" th:text="${user.fullName}"></h3>
-            <span class="badge bg-light text-danger border border-danger rounded-pill" th:text="${user.role}"></span>
-        </div>
+<div class="content-wrapper">
+    <div class="container py-5">
+        <div class="max-width-600 mx-auto bg-white p-5 shadow-sm rounded-4" style="max-width: 600px;">
+            <div class="text-center mb-4">
+                <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow-sm"
+                     style="width: 80px; height: 80px; font-size: 30px; font-weight: 800;"
+                     th:text="${user.fullName.substring(0,1).toUpperCase()}">U</div>
+                <h3 class="fw-bold" th:text="${user.fullName}"></h3>
+                <span class="badge bg-light text-danger border border-danger rounded-pill" th:text="${user.role}"></span>
+            </div>
 
-        <div class="row g-4 mt-2">
-            <div class="col-md-6">
-                <label class="text-muted small fw-bold">Tên đăng nhập</label>
-                <div class="p-2 bg-light rounded" th:text="${user.username}"></div>
+            <div class="row g-4 mt-2">
+                <div class="col-md-6">
+                    <label class="text-muted small fw-bold">Tên đăng nhập</label>
+                    <div class="p-2 bg-light rounded" th:text="${user.username}"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-muted small fw-bold">Email</label>
+                    <div class="p-2 bg-light rounded" th:text="${user.email}"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-muted small fw-bold">Số điện thoại</label>
+                    <div class="p-2 bg-light rounded" th:text="${user.phoneNumber}"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-muted small fw-bold">Địa chỉ</label>
+                    <div class="p-2 bg-light rounded" th:text="${user.address}"></div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="text-muted small fw-bold">Email</label>
-                <div class="p-2 bg-light rounded" th:text="${user.email}"></div>
-            </div>
-            <div class="col-md-6">
-                <label class="text-muted small fw-bold">Số điện thoại</label>
-                <div class="p-2 bg-light rounded" th:text="${user.phoneNumber}"></div>
-            </div>
-            <div class="col-md-6">
-                <label class="text-muted small fw-bold">Địa chỉ</label>
-                <div class="p-2 bg-light rounded" th:text="${user.address}"></div>
-            </div>
-        </div>
 
-        <div class="text-center mt-5">
-            <a th:href="@{/}" class="btn btn-outline-secondary rounded-pill px-4">Quay lại mua sắm</a>
+            <div class="text-center mt-5">
+                <a th:href="@{/}" class="btn btn-outline-secondary rounded-pill px-4 hover-scale">Quay lại mua sắm</a>
+            </div>
         </div>
     </div>
 </div>

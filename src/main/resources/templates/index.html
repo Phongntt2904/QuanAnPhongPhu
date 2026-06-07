@@ -49,94 +49,96 @@
 
 <div th:replace="~{fragments :: header}"></div>
 
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                <span class="hero-tag">🔥 Giảm 50% cho người mới</span>
-                <h1 class="display-3 fw-800 mb-4">Giao Hạnh Phúc <br>Đến <span style="color: var(--primary-color)">Tận Cửa</span></h1>
-                <p class="lead text-muted mb-5">Hàng ngàn món ngon từ các đầu bếp hàng đầu đang chờ đợi bạn. Đặt ngay để nhận ưu đãi vận chuyển 0đ.</p>
-                <div class="d-flex gap-3">
-                    <a href="#menu" class="btn btn-danger btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg">Khám Phá Menu</a>
-                    <a href="#" class="btn btn-outline-dark btn-lg rounded-pill px-4 py-3 fw-bold">Xem Ưu Đãi</a>
-                </div>
-            </div>
-            <div class="col-lg-6 d-none d-lg-block animate__animated animate__zoomIn">
-                <img src="https://img.freepik.com/free-photo/fresh-gourmet-meal-beef-noodle-soup-generated-by-ai_188544-15494.jpg" class="img-fluid rounded-circle shadow-lg p-3 bg-white" alt="Hero">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Features Bar -->
-<section class="py-5">
-    <div class="container py-5">
-        <div class="row g-4 text-center">
-            <div class="col-md-4">
-                <div class="feature-card shadow-sm">
-                    <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
-                    <h5 class="fw-bold">Giao hàng 15 Phút</h5>
-                    <p class="text-muted small mb-0">Hệ thống tài xế đông đảo đảm bảo đồ ăn luôn nóng hổi khi đến tay bạn.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card shadow-sm">
-                    <div class="feature-icon"><i class="bi bi-check2-circle"></i></div>
-                    <h5 class="fw-bold">An Toàn Tuyệt Đối</h5>
-                    <p class="text-muted small mb-0">Quy trình chế biến và đóng gói đạt chuẩn vệ sinh an toàn thực phẩm.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card shadow-sm">
-                    <div class="feature-icon"><i class="bi bi-wallet2"></i></div>
-                    <h5 class="fw-bold">Giá Cực Ưu Đãi</h5>
-                    <p class="text-muted small mb-0">Hàng ngàn mã giảm giá và chương trình tích điểm đổi quà hấp dẫn.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Menu Section -->
-<section id="menu" class="py-5 bg-white" style="border-top-right-radius: 120px;">
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-800">Thực Đơn <span class="text-danger">Hôm Nay</span></h2>
-            <p class="text-muted">Chọn món ăn yêu thích và tận hưởng khoảnh khắc ẩm thực</p>
-            <div class="mt-4">
-                <a th:href="@{/}" class="cat-btn active">Tất cả</a>
-                <a th:each="cat : ${categories}" href="#" class="cat-btn" th:text="${cat.name}"></a>
-            </div>
-        </div>
-
-        <div class="row g-4">
-            <div th:each="product : ${listProducts}" class="col-md-6 col-lg-3">
-                <div class="card food-card shadow-sm">
-                    <div class="img-container">
-                        <img th:src="${product.imageUrl}" alt="Food Image" onerror="this.src='https://via.placeholder.com/400x300?text=Food'">
-                        <div class="badge-price shadow" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></div>
+<div class="content-wrapper">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <span class="hero-tag">🔥 Giảm 50% cho người mới</span>
+                    <h1 class="display-3 fw-800 mb-4">Giao Hạnh Phúc <br>Đến <span style="color: var(--primary-color)">Tận Cửa</span></h1>
+                    <p class="lead text-muted mb-5">Hàng ngàn món ngon từ các đầu bếp hàng đầu đang chờ đợi bạn. Đặt ngay để nhận ưu đãi vận chuyển 0đ.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#menu" class="btn btn-danger btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg hover-scale">Khám Phá Menu</a>
+                        <a href="#" class="btn btn-outline-dark btn-lg rounded-pill px-4 py-3 fw-bold hover-scale">Xem Ưu Đãi</a>
                     </div>
-                    <div class="card-body p-4 text-center">
-                        <h5 class="fw-bold mb-2" th:text="${product.name}"></h5>
-                        <p class="text-muted small mb-4" th:text="${product.description}"></p>
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                            <span class="text-warning fw-bold"><i class="bi bi-star-fill me-1"></i>4.9</span>
-                            <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
-                                <button type="submit" class="btn-add-cart shadow"><i class="bi bi-bag-plus fs-5"></i></button>
-                            </form>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block animate__animated animate__zoomIn">
+                    <img src="https://img.freepik.com/free-photo/fresh-gourmet-meal-beef-noodle-soup-generated-by-ai_188544-15494.jpg" class="img-fluid rounded-circle shadow-lg p-3 bg-white" alt="Hero">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="feature-card shadow-sm hover-scale">
+                        <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+                        <h5 class="fw-bold">Giao hàng 15 Phút</h5>
+                        <p class="text-muted small mb-0">Hệ thống tài xế đông đảo đảm bảo đồ ăn luôn nóng hổi khi đến tay bạn.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card shadow-sm hover-scale">
+                        <div class="feature-icon"><i class="bi bi-check2-circle"></i></div>
+                        <h5 class="fw-bold">An Toàn Tuyệt Đối</h5>
+                        <p class="text-muted small mb-0">Quy trình chế biến và đóng gói đạt chuẩn vệ sinh an toàn thực phẩm.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card shadow-sm hover-scale">
+                        <div class="feature-icon"><i class="bi bi-wallet2"></i></div>
+                        <h5 class="fw-bold">Giá Cực Ưu Đãi</h5>
+                        <p class="text-muted small mb-0">Hàng ngàn mã giảm giá và chương trình tích điểm đổi quà hấp dẫn.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-5 bg-white" style="border-top-right-radius: 120px;">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-800">Thực Đơn <span class="text-danger">Hôm Nay</span></h2>
+                <p class="text-muted">Chọn món ăn yêu thích và tận hưởng khoảnh khắc ẩm thực</p>
+                <div class="mt-4">
+                    <a th:href="@{/}" class="cat-btn active hover-scale">Tất cả</a>
+                    <a th:each="cat : ${categories}" href="#" class="cat-btn hover-scale" th:text="${cat.name}"></a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div th:each="product : ${listProducts}" class="col-md-6 col-lg-3">
+                    <div class="card food-card shadow-sm">
+                        <div class="img-container">
+                            <img th:src="${product.imageUrl}" alt="Food Image" onerror="this.src='https://via.placeholder.com/400x300?text=Food'">
+                            <div class="badge-price shadow" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></div>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bold mb-2" th:text="${product.name}"></h5>
+                            <p class="text-muted small mb-4" th:text="${product.description}"></p>
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                <span class="text-warning fw-bold"><i class="bi bi-star-fill me-1"></i>4.9</span>
+                                <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
+                                    <button type="submit" class="btn-add-cart shadow hover-scale"><i class="bi bi-bag-plus fs-5"></i></button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div th:if="${#lists.isEmpty(listProducts)}" class="text-center py-5">
-            <h4 class="text-muted">Không tìm thấy món bạn yêu cầu 😢</h4>
-            <a th:href="@{/}" class="btn btn-danger rounded-pill mt-3 px-4">Quay lại Menu</a>
+            <div th:if="${#lists.isEmpty(listProducts)}" class="text-center py-5">
+                <h4 class="text-muted">Không tìm thấy món bạn yêu cầu 😢</h4>
+                <a th:href="@{/}" class="btn btn-danger rounded-pill mt-3 px-4 hover-scale">Quay lại Menu</a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <div th:replace="~{fragments :: footer}"></div>
 

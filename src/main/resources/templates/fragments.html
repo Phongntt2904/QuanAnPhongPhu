@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<!-- Fragment: Các thư viện CSS dùng chung -->
 <head th:fragment="html_head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,31 +13,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root { --primary-color: #ff4757; --secondary-color: #2f3542; --bg-light: #f8f9fa; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--secondary-color); overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-light); color: var(--secondary-color); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        .content-wrapper { flex: 1; } /* Đảm bảo nội dung chính chiếm hết không gian */
         .navbar { backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.9) !important; transition: 0.3s; }
         .navbar-brand { font-weight: 800; color: var(--primary-color) !important; font-size: 1.6rem; letter-spacing: -1px; }
         .footer-dark { background: var(--secondary-color); color: #a4b0be; padding: 80px 0 30px; }
         .footer-dark h5 { color: white; font-weight: 700; margin-bottom: 25px; }
         .footer-dark a { color: #a4b0be; text-decoration: none; transition: 0.3s; }
         .footer-dark a:hover { color: var(--primary-color); }
+        .search-box { position: relative; width: 100%; max-width: 400px; }
+        .search-box input { padding-left: 40px; border-radius: 50px; border: 1px solid #eee; background: #f1f2f6; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a4b0be; }
+        .hover-scale { transition: transform 0.2s ease-in-out; }
+        .hover-scale:hover { transform: scale(1.05); }
     </style>
 </head>
 
+<body>
+<!-- Fragment: Header dùng chung -->
 <nav th:fragment="header" class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand" th:href="@{/}"><i class="bi bi-rocket-takeoff-fill me-2"></i>FOODHUB</a>
 
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="search-box mx-auto d-none d-lg-block w-50 px-5">
-                <form th:action="@{/}" method="get" class="position-relative">
-                    <i class="bi bi-search position-absolute" style="left: 35px; top: 50%; transform: translateY(-50%); color: #a4b0be;"></i>
-                    <input type="text" name="keyword" class="form-control border-0 rounded-pill ps-5 bg-light py-2" placeholder="Tìm món ngon bạn thèm...">
+            <div class="search-box mx-auto d-none d-lg-block">
+                <form th:action="@{/}" method="get">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="keyword" class="form-control border-0" placeholder="Tìm món ngon bạn thèm...">
                 </form>
             </div>
 
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 ms-auto">
                 <div sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/admin}" class="btn btn-dark rounded-pill px-3 btn-sm shadow-sm">Quản trị</a>
+                    <a th:href="@{/admin}" class="btn btn-dark rounded-pill px-3 btn-sm shadow-sm hover-scale">Quản trị</a>
                 </div>
 
                 <a th:href="@{/cart}" class="btn position-relative p-2 text-dark hover-scale">
@@ -45,11 +58,11 @@
                 </a>
 
                 <div sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold">Đăng nhập</a>
+                    <a th:href="@{/login}" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold hover-scale">Đăng nhập</a>
                 </div>
 
                 <div sec:authorize="isAuthenticated()" class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark hover-scale" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm"
                              style="width:35px; height:35px; font-weight:800;"
                              th:text="${#authentication.name.substring(0,1).toUpperCase()}">U</div>
@@ -70,6 +83,7 @@
     </div>
 </nav>
 
+<!-- Fragment: Footer dùng chung -->
 <footer th:fragment="footer" class="footer-dark">
     <div class="container">
         <div class="row">
@@ -77,9 +91,9 @@
                 <h4 class="text-white fw-bold mb-4">🍕 FOODHUB</h4>
                 <p>Nền tảng giao đồ ăn siêu tốc. Chúng tôi mang hương vị nhà hàng đến tận cửa nhà bạn chỉ trong chớp mắt.</p>
                 <div class="d-flex gap-3 mt-4 fs-4">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-tiktok"></i></a>
+                    <a href="#" class="text-white hover-scale"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white hover-scale"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white hover-scale"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>
             <div class="col-lg-2 col-6 mb-4">
@@ -100,8 +114,8 @@
             <div class="col-lg-4 mb-4">
                 <h5>Tải ứng dụng</h5>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-outline-light btn-sm"><i class="bi bi-apple me-2"></i>App Store</button>
-                    <button class="btn btn-outline-light btn-sm"><i class="bi bi-play-fill me-2"></i>Play Store</button>
+                    <button class="btn btn-outline-light btn-sm hover-scale"><i class="bi bi-apple me-2"></i>App Store</button>
+                    <button class="btn btn-outline-light btn-sm hover-scale"><i class="bi bi-play-fill me-2"></i>Play Store</button>
                 </div>
             </div>
         </div>
@@ -110,4 +124,6 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

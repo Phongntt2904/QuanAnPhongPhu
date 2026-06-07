@@ -5,48 +5,50 @@
 
 <div th:replace="~{fragments :: header}"></div>
 
-<div class="container py-5">
-    <div class="bg-white p-5 shadow-sm rounded-4">
-        <h2 class="fw-800 mb-4"><i class="bi bi-cart3 text-danger me-2"></i>Giỏ hàng</h2>
+<div class="content-wrapper">
+    <div class="container py-5">
+        <div class="bg-white p-5 shadow-sm rounded-4">
+            <h2 class="fw-800 mb-4"><i class="bi bi-cart3 text-danger me-2"></i>Giỏ hàng</h2>
 
-        <div th:if="${#lists.isEmpty(cartItems)}" class="text-center py-5">
-            <i class="bi bi-cart-x display-1 text-muted"></i>
-            <p class="lead mt-3">Giỏ hàng đang trống.</p>
-            <a th:href="@{/}" class="btn btn-danger rounded-pill px-4">Quay lại Menu</a>
-        </div>
+            <div th:if="${#lists.isEmpty(cartItems)}" class="text-center py-5">
+                <i class="bi bi-cart-x display-1 text-muted"></i>
+                <p class="lead mt-3">Giỏ hàng đang trống. Hãy chọn món ăn ngay!</p>
+                <a th:href="@{/}" class="btn btn-danger rounded-pill px-4 hover-scale">Quay lại Menu</a>
+            </div>
 
-        <div th:if="${not #lists.isEmpty(cartItems)}">
-            <table class="table align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Giá</th>
-                        <th>Số lượng</th>
-                        <th>Thành tiền</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="item : ${cartItems}">
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img th:src="${item.product.imageUrl}" class="rounded-3 me-3" style="width: 50px; height: 50px; object-fit: cover;">
-                                <span th:text="${item.product.name}" class="fw-bold"></span>
-                            </div>
-                        </td>
-                        <td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
-                        <td th:text="${item.quantity}"></td>
-                        <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + 'đ'" class="text-danger fw-bold"></td>
-                        <td>
-                            <a th:href="@{/cart/remove/{id}(id=${item.id})}" class="text-muted"><i class="bi bi-trash"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div th:if="${not #lists.isEmpty(cartItems)}">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${cartItems}">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img th:src="${item.product.imageUrl}" class="rounded-3 me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <span th:text="${item.product.name}" class="fw-bold"></span>
+                                </div>
+                            </td>
+                            <td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + 'đ'" class="text-danger fw-bold"></td>
+                            <td>
+                                <a th:href="@{/cart/remove/{id}(id=${item.id})}" class="text-muted hover-scale"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <div class="text-end mt-4">
-                <h4 class="fw-bold">Tổng cộng: <span class="text-danger" th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span></h4>
-                <button class="btn btn-danger rounded-pill px-5 py-2 mt-3 fw-bold shadow">THANH TOÁN</button>
+                <div class="text-end mt-4">
+                    <h4 class="fw-bold">Tổng cộng: <span class="text-danger" th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + 'đ'"></span></h4>
+                    <button class="btn btn-danger rounded-pill px-5 py-2 mt-3 fw-bold shadow hover-scale">THANH TOÁN</button>
+                </div>
             </div>
         </div>
     </div>
